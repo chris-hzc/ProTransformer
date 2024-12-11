@@ -1,6 +1,19 @@
+# ProTransformer: Robustify Transformers via Plug-and-Play Paradigm
+
+
+This repository provides the code, data, and results for the paper: ProTransformer: Robustify Transformers via Plug-and-Play Paradigm [[arXiv](https://arxiv.org/abs/2410.23182)].
+
+<p float="left">
+  <img src="./figures/textattack.png" width="61.5%" />
+  <img src="./figures/protransformer.png" width="35%" /> 
+</p>
+
+
+## Core Codes
+
 ## Robust Attention
 
-Core code: `transformers/models/bert/modeling_bert.py`
+Example core code: `transformers/models/bert/modeling_bert.py`
 
 ```
 class RobustSum(nn.Module):
@@ -46,3 +59,42 @@ class RobustSum(nn.Module):
             
         return M
 ```
+
+## Requirements
+
+This project is built upon [Python 3.10](https://www.python.org).
+
+
+## Reproducing Results
+
+### Classical Text Attack
+```bash
+python main.py --backbone='bert' --norm='MCP' --gamma=4.0 --epsilon=1e-2 --L=3 --data='ag-news' --attack='tf'
+```
+
+
+## Experimental Results
+
+
+
+<p float="left">
+  <img src="./figures/results.png" width="100%" />
+  <!-- <img src="./figures/instr-108.jpg" width="54%" />  -->
+</p>
+
+## Citation
+
+If you find our work helpful, please consider citing it as
+```
+@article{hou2024protransformer,
+  title={ProTransformer: Robustify Transformers via Plug-and-Play Paradigm},
+  author={Hou, Zhichao and Gao, Weizhi and Shen, Yuchen and Wang, Feiyi and Liu, Xiaorui},
+  journal={arXiv preprint arXiv:2410.23182},
+  year={2024}
+}
+```
+
+
+
+
+

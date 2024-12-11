@@ -1,6 +1,7 @@
 import argparse
 import time
 import textattack
+import torch.nn as nn
 
 import transformers
 from textattack.models.wrappers import HuggingFaceModelWrapper
@@ -45,19 +46,104 @@ def load_params(args, model):
     
     return model
 
+def load_params(args, model):
+    if args.backbone == 'bert':
+        layers = model.bert.encoder.layer
+    elif args.backbone == 'roberta':
+        layers = model.roberta.encoder.layer
+    elif args.backbone == 'distilbert':
+        layers = model.distilbert.transformer.layer
+    elif args.backbone == 'albert':
+        layers = model.albert.encoder.albert_layer_groups[0].albert_layers
+        
+    for layer in layers:
+        
+        if args.backbone in ['distilbert','albert']:
+            layer.attention.robust_sum.L = args.L
+            layer.attention.robust_sum.norm = args.norm
+            layer.attention.robust_sum.gamma = args.gamma
+            layer.attention.robust_sum.epsilon = args.epsilon
+            layer.attention.robust_sum.delta = args.delta
+        else:        
+            layer.attention.self.robust_sum.L = args.L
+            layer.attention.self.robust_sum.norm = args.norm
+            layer.attention.self.robust_sum.gamma = args.gamma
+            layer.attention.self.robust_sum.epsilon = args.epsilon
+            layer.attention.self.robust_sum.t = args.t
+            layer.attention.self.robust_sum.delta = args.delta
+    
+    return model
+
+
+def get_model():
+    if args.backbone == 'bert':
+        model = transformers.models.bert.modeling_bert.BertForSequenceClassification.from_pretrained(f"textattack/{args.backbone}-base-uncased-{args.data}")
+    elif args.backbone == 'roberta':
+        model = transformers.models.roberta.modeling_roberta.RobertaForSequenceClassification.from_pretrained(f"textattack/{args.backbone}-base-{args.data}")
+    elif args.backbone == 'distilbert':
+        model = transformers.models.distilbert.modeling_distilbert.DistilBertForSequenceClassification.from_pretrained(f"textattack/distilbert-base-uncased-{args.data}")
+    elif args.backbone == 'albert':
+        model = transformers.models.albert.modeling_albert.AlbertForSequenceClassification.from_pretrained(f"textattack/albert-base-v2-{args.data}")
+    return model
+
+
+def get_tokenizer():
+    if args.backbone == 'bert':
+        tokenizer = transformers.AutoTokenizer.from_pretrained(f"textattack/{args.backbone}-base-uncased-{args.data}")
+    elif args.backbone == 'roberta':
+        tokenizer = transformers.AutoTokenizer.from_pretrained(f"textattack/{args.backbone}-base-{args.data}")
+    elif args.backbone == 'distilbert':
+        tokenizer = transformers.AutoTokenizer.from_pretrained(f"textattack/{args.backbone}-base-uncased-{args.data}")
+    elif args.backbone == 'albert':
+        tokenizer = transformers.AutoTokenizer.from_pretrained(f"textattack/albert-base-v2-{args.data}")
+    return tokenizer
+
+
+def get_dataset():
+    if args.data=='ag-news':
+        data_name = 'ag_news'
+    elif args.data =='mnli':
+        data_name = 'multi_nli'
+    else:
+        data_name =args.data
+        
+    if args.data == 'mnli':
+        dataset = HuggingFaceDataset(data_name, None, "validation_mismatched")
+    elif args.data in ['sms_spam']:
+        dataset = HuggingFaceDataset(data_name, None, "train")
+    elif args.data in ['rte','cola']:
+        dataset = HuggingFaceDataset('glue', data_name, "validation")
+    else:
+        dataset = HuggingFaceDataset(data_name, None, "test")
+    return dataset
+
+
+def get_attack(model_wrapper):
+    if args.attack == 'tf':
+        attack = textattack.attack_recipes.TextFoolerJin2019.build(model_wrapper)
+    elif args.attack == 'ba':
+        attack = textattack.attack_recipes.BERTAttackLi2020.build(model_wrapper)
+    elif args.attack == 'tb':
+        attack = textattack.attack_recipes.TextBuggerLi2018.build(model_wrapper)
+    elif args.attack == 'dwb':
+        attack = textattack.attack_recipes.DeepWordBugGao2018.build(model_wrapper)
+    elif args.attack == 'pwws':
+        attack = textattack.attack_recipes.PWWSRen2019.build(model_wrapper)
+    return attack
 
 def main():
     print(args)
-    model = transformers.models.bert.modeling_bert.BertForSequenceClassification.from_pretrained(f"textattack/{args.backbone}-base-uncased-{args.data}")
+
+    model = get_model()
     model = load_params(args, model)
-    tokenizer = transformers.AutoTokenizer.from_pretrained(f"textattack/{args.backbone}-base-uncased-{args.data}")
+    tokenizer = get_tokenizer()
     tokenizer.model_max_length=args.max_length
     
     model_wrapper = HuggingFaceModelWrapper(model, tokenizer)
         
-    dataset = HuggingFaceDataset("ag_news", None, "test")
+    dataset = get_dataset()
     
-    attack = textattack.attack_recipes.TextFoolerJin2019.build(model_wrapper)
+    attack = get_attack(model_wrapper)
 
     attack_args = AttackArgs(num_examples=args.num_example)
 

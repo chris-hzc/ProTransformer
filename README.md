@@ -4,7 +4,7 @@
 
 ### Robustify Transformers via Plug-and-Play Paradigm
 
-<h2>🌐 <a href="https://protransformers.github.io">Project Page &amp; Interactive Demos</a> →</h2>
+<a href="https://protransformers.github.io"><img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/project_page_button.png" width="440" alt="Project Page · Interactive Demos"></a>
 
 **[Zhichao Hou](https://github.com/chris-hzc)<sup>1</sup> · Weizhi Gao<sup>1</sup> · Yuchen Shen<sup>2</sup> · Feiyi Wang<sup>3</sup> · Xiaorui Liu<sup>1,✉</sup>**
 

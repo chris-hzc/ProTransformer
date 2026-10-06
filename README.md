@@ -16,7 +16,8 @@
 <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch">
 <img src="https://img.shields.io/badge/🤗%20Transformers-4.40-FFD21E" alt="Transformers">
 <img src="https://img.shields.io/badge/TextAttack-attacks-2ea44f" alt="TextAttack">
-<a href="https://pypi.org/project/protransformers/"><img src="https://img.shields.io/pypi/v/protransformers?color=blue" alt="PyPI"></a>
+<a href="https://pypi.org/project/protransformers/"><img src="https://img.shields.io/pypi/v/protransformers?color=blue&logo=pypi&logoColor=white" alt="PyPI"></a>
+<a href="https://pepy.tech/project/protransformers"><img src="https://static.pepy.tech/badge/protransformers" alt="Downloads"></a>
 <a href="https://github.com/chris-hzc/ProTransformer/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-green" alt="License"></a>
 <a href="https://github.com/chris-hzc/ProTransformer/stargazers"><img src="https://img.shields.io/github/stars/chris-hzc/ProTransformer?style=social" alt="GitHub stars"></a>
 
@@ -24,6 +25,8 @@
 <b>No retraining. No fine-tuning. Just swap the attention.</b><br>
 <i>A 4-line robust attention layer that plugs into any pretrained transformer — language, vision, or graph.</i>
 </p>
+
+<pre><code>pip install protransformers</code></pre>
 
 </div>
 
@@ -36,6 +39,7 @@
 
 ## 📰 News
 
+- **[2026.10]** 📦 ProTransformer is now on [PyPI](https://pypi.org/project/protransformers/): `pip install protransformers`.
 - **[2024]** 🎉 ProTransformer is accepted to **NeurIPS 2024**!
 - **[2024.10]** 📄 Paper is released on [arXiv](https://arxiv.org/abs/2410.23182) and the code is open-sourced.
 
@@ -171,7 +175,7 @@ Every model below is a drop-in replacement for its 🤗 Transformers counterpart
 
 ### 0️⃣ Installation
 
-**As a library** — just the ProTransformer models:
+**As a library** — just the ProTransformer models, from [PyPI](https://pypi.org/project/protransformers/):
 
 ```bash
 pip install protransformers

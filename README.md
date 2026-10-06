@@ -11,6 +11,7 @@
 <img src="https://img.shields.io/badge/NeurIPS-2024-6f42c1?style=for-the-badge" alt="NeurIPS 2024">
 <a href="https://arxiv.org/abs/2410.23182"><img src="https://img.shields.io/badge/arXiv-2410.23182-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white" alt="arXiv"></a>
 <a href="https://arxiv.org/pdf/2410.23182"><img src="https://img.shields.io/badge/Paper-PDF-1f6feb?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="PDF"></a>
+<a href="https://protransformers.github.io"><img src="https://img.shields.io/badge/Project-Page-22d3ee?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Project Page"></a>
 <br>
 <img src="https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white" alt="Python 3.10">
 <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch">
@@ -38,6 +39,7 @@
 
 ## 📰 News
 
+- **[2026.10]** 🌐 Project page with interactive demos is live: [protransformers.github.io](https://protransformers.github.io).
 - **[2026.10]** 📦 ProTransformer is now on [PyPI](https://pypi.org/project/protransformers/): `pip install protransformers`.
 - **[2024]** 🎉 ProTransformer is accepted to **NeurIPS 2024**!
 - **[2024.10]** 📄 Paper is released on [arXiv](https://arxiv.org/abs/2410.23182) and the code is open-sourced.

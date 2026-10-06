@@ -69,9 +69,9 @@ Without any further fine-tuning, ProTransformer improves the robustness of vanil
 
 Each output token aggregates value vectors with attention weights, $z=\sum_j a_j v_j$, which is exactly the minimizer of
 
-$$
+```math
 \arg\min_{z}\ \mathcal{L}(z)=\sum_{j=1}^{N} a_j\,\lVert v_j - z\rVert^2 .
-$$
+```
 
 The quadratic penalty lets a few **adversarially perturbed tokens dominate** the output — the root of the vulnerability.
 
@@ -84,9 +84,9 @@ The quadratic penalty lets a few **adversarially perturbed tokens dominate** the
 
 We replace the quadratic loss with a robust penalty $\rho$ (ℓ₁, Huber, MCP, Huber-MCP):
 
-$$
+```math
 \arg\min_{z}\ \mathcal{L}(z)=\sum_{j=1}^{N} a_j\,\rho\big(\lVert v_j - z\rVert\big).
-$$
+```
 
 </details>
 
@@ -97,11 +97,11 @@ $$
 
 Optimizing a convex localized upper bound with a Newton step yields a closed-form **re-weighted attention**:
 
-$$
+```math
 z^{(k+1)} = \frac{\sum_j a_j\, w_j^{(k)}\, v_j}{\sum_j a_j\, w_j^{(k)}},
 \qquad
 w_j^{(k)} = \frac{\rho'\big(\lVert v_j - z^{(k)}\rVert\big)}{2\,\lVert v_j - z^{(k)}\rVert},
-$$
+```
 
 with guaranteed descent $\mathcal{L}(z^{(k+1)}) \le \mathcal{L}(z^{(k)})$. Outlier tokens with large residuals are automatically **down-weighted** (and fully removed beyond $\gamma$ for MCP).
 

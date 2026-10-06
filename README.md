@@ -17,7 +17,6 @@
 <img src="https://img.shields.io/badge/🤗%20Transformers-4.40-FFD21E" alt="Transformers">
 <img src="https://img.shields.io/badge/TextAttack-attacks-2ea44f" alt="TextAttack">
 <a href="https://pypi.org/project/protransformers/"><img src="https://img.shields.io/pypi/v/protransformers?color=blue&logo=pypi&logoColor=white" alt="PyPI"></a>
-<a href="https://pepy.tech/project/protransformers"><img src="https://static.pepy.tech/badge/protransformers" alt="Downloads"></a>
 <a href="https://github.com/chris-hzc/ProTransformer/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-green" alt="License"></a>
 <a href="https://github.com/chris-hzc/ProTransformer/stargazers"><img src="https://img.shields.io/github/stars/chris-hzc/ProTransformer?style=social" alt="GitHub stars"></a>
 

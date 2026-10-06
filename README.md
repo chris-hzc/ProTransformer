@@ -4,11 +4,12 @@
 
 ### Robustify Transformers via Plug-and-Play Paradigm
 
+<h2>🌐 <a href="https://protransformers.github.io">Project Page &amp; Interactive Demos</a> →</h2>
+
 **[Zhichao Hou](https://github.com/chris-hzc)<sup>1</sup> · Weizhi Gao<sup>1</sup> · Yuchen Shen<sup>2</sup> · Feiyi Wang<sup>3</sup> · Xiaorui Liu<sup>1,✉</sup>**
 
 <sup>1</sup>North Carolina State University &nbsp;&nbsp; <sup>2</sup>Carnegie Mellon University &nbsp;&nbsp; <sup>3</sup>Oak Ridge National Laboratory
 
-<a href="https://protransformers.github.io"><img src="https://img.shields.io/badge/%F0%9F%8C%90%20Project%20Page-Live%20Demos-22d3ee?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Project Page"></a>
 <img src="https://img.shields.io/badge/NeurIPS-2024-6f42c1?style=for-the-badge" alt="NeurIPS 2024">
 <a href="https://arxiv.org/abs/2410.23182"><img src="https://img.shields.io/badge/arXiv-2410.23182-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white" alt="arXiv"></a>
 <a href="https://arxiv.org/pdf/2410.23182"><img src="https://img.shields.io/badge/Paper-PDF-1f6feb?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="PDF"></a>
@@ -27,8 +28,6 @@
 </p>
 
 <pre><code>pip install protransformers</code></pre>
-
-<h3>👉 <a href="https://protransformers.github.io">Try the interactive demos on our Project Page</a> 👈</h3>
 
 <a href="https://protransformers.github.io"><img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/project_page.png" width="85%" alt="ProTransformer project page: click to try the interactive demos"></a>
 

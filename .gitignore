@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+*.pdf
+.ipynb_checkpoints/
+.vscode/
+.idea/
+data/

@@ -1,0 +1,13 @@
+# Tested with: torch 2.6.0, transformers 4.49.0, tokenizers 0.21.1, textattack 0.3.10, accelerate 0.28.0
+# `protransformers` (this repo) provides the models; pip `transformers` provides tokenizers and is needed by TextAttack.
+torch>=2.0
+torchvision
+transformers
+tokenizers>=0.14
+accelerate
+sentencepiece
+protobuf
+textattack
+scipy
+scikit-learn
+tqdm

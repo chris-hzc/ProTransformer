@@ -62,50 +62,37 @@ Without any further fine-tuning, ProTransformer improves the robustness of vanil
 
 ## 🧠 Method
 
-<details open>
-<summary><b>1. Attention is a weighted least-squares (WLS) estimator</b></summary>
-
-<br>
+#### 1. Attention is a weighted least-squares (WLS) estimator
 
 Each output token aggregates value vectors with attention weights, $z=\sum_j a_j v_j$, which is exactly the minimizer of
 
 ```math
-\arg\min_{z}\ \mathcal{L}(z)=\sum_{j=1}^{N} a_j\,\lVert v_j - z\rVert^2 .
+\arg\min_{z} \mathcal{L}(z) = \sum_{j=1}^{N} a_j \| v_j - z \|^2
 ```
 
 The quadratic penalty lets a few **adversarially perturbed tokens dominate** the output — the root of the vulnerability.
 
-</details>
-
-<details open>
-<summary><b>2. Robust token estimator</b></summary>
-
-<br>
+#### 2. Robust token estimator
 
 We replace the quadratic loss with a robust penalty $\rho$ (ℓ₁, Huber, MCP, Huber-MCP):
 
 ```math
-\arg\min_{z}\ \mathcal{L}(z)=\sum_{j=1}^{N} a_j\,\rho\big(\lVert v_j - z\rVert\big).
+\arg\min_{z} \mathcal{L}(z) = \sum_{j=1}^{N} a_j \rho( \| v_j - z \| )
 ```
 
-</details>
-
-<details open>
-<summary><b>3. Newton-IRLS → ProAttention</b></summary>
-
-<br>
+#### 3. Newton-IRLS → ProAttention
 
 Optimizing a convex localized upper bound with a Newton step yields a closed-form **re-weighted attention**:
 
 ```math
-z^{(k+1)} = \frac{\sum_j a_j\, w_j^{(k)}\, v_j}{\sum_j a_j\, w_j^{(k)}},
-\qquad
-w_j^{(k)} = \frac{\rho'\big(\lVert v_j - z^{(k)}\rVert\big)}{2\,\lVert v_j - z^{(k)}\rVert},
+z^{(k+1)} = \frac{\sum_j a_j w_j^{(k)} v_j}{\sum_j a_j w_j^{(k)}}
+```
+
+```math
+w_j^{(k)} = \frac{\rho'( \| v_j - z^{(k)} \| )}{2 \| v_j - z^{(k)} \|}
 ```
 
 with guaranteed descent $\mathcal{L}(z^{(k+1)}) \le \mathcal{L}(z^{(k)})$. Outlier tokens with large residuals are automatically **down-weighted** (and fully removed beyond $\gamma$ for MCP).
-
-</details>
 
 ### 🔧 ProAttention in 4 lines (MCP)
 

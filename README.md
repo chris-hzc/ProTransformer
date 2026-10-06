@@ -16,6 +16,8 @@
 <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch">
 <img src="https://img.shields.io/badge/🤗%20Transformers-4.40-FFD21E" alt="Transformers">
 <img src="https://img.shields.io/badge/TextAttack-attacks-2ea44f" alt="TextAttack">
+<a href="https://pypi.org/project/protransformers/"><img src="https://img.shields.io/pypi/v/protransformers?color=blue" alt="PyPI"></a>
+<a href="https://github.com/chris-hzc/ProTransformer/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-green" alt="License"></a>
 <a href="https://github.com/chris-hzc/ProTransformer/stargazers"><img src="https://img.shields.io/github/stars/chris-hzc/ProTransformer?style=social" alt="GitHub stars"></a>
 
 <p>
@@ -26,8 +28,8 @@
 </div>
 
 <p align="center">
-  <img src="./figures/textattack.png" width="61.5%" />
-  <img src="./figures/protransformer.png" width="35%" />
+  <img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/textattack.png" width="61.5%" />
+  <img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/protransformer.png" width="35%" />
 </p>
 
 ---
@@ -68,8 +70,8 @@ Each output token aggregates the value vectors with attention weights, which is 
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./figures/eq_wls_dark.svg">
-    <img src="./figures/eq_wls_light.svg" alt="z = argmin_z sum_j a_j ||v_j - z||^2 = sum_j a_j v_j">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/eq_wls_dark.svg">
+    <img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/eq_wls_light.svg" alt="z = argmin_z sum_j a_j ||v_j - z||^2 = sum_j a_j v_j">
   </picture>
 </p>
 
@@ -81,8 +83,8 @@ We replace the quadratic loss with a robust penalty $\rho$ (ℓ₁, Huber, MCP, 
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./figures/eq_robust_dark.svg">
-    <img src="./figures/eq_robust_light.svg" alt="z = argmin_z sum_j a_j rho(||v_j - z||)">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/eq_robust_dark.svg">
+    <img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/eq_robust_light.svg" alt="z = argmin_z sum_j a_j rho(||v_j - z||)">
   </picture>
 </p>
 
@@ -92,8 +94,8 @@ Optimizing a convex localized upper bound with a Newton step yields a closed-for
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./figures/eq_irls_dark.svg">
-    <img src="./figures/eq_irls_light.svg" alt="z^(k+1) = sum_j a_j w_j v_j / sum_j a_j w_j,  w_j = rho'(||v_j - z||) / (2 ||v_j - z||)">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/eq_irls_dark.svg">
+    <img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/eq_irls_light.svg" alt="z^(k+1) = sum_j a_j w_j v_j / sum_j a_j w_j,  w_j = rho'(||v_j - z||) / (2 ||v_j - z||)">
   </picture>
 </p>
 
@@ -169,17 +171,25 @@ Every model below is a drop-in replacement for its 🤗 Transformers counterpart
 
 ### 0️⃣ Installation
 
+**As a library** — just the ProTransformer models:
+
+```bash
+pip install protransformers
+```
+
+**To run the quick-start scripts** — clone the repo and install with the extra dependencies (TextAttack, torchvision, …):
+
 ```bash
 git clone https://github.com/chris-hzc/ProTransformer.git
 cd ProTransformer
 
 conda create -n protransformer python=3.10 -y
 conda activate protransformer
-pip install -r requirements.txt
+pip install -e ".[examples]"
 ```
 
 > [!NOTE]
-> `./protransformers` is a modified copy of 🤗 Transformers (v4.40) that contains ProAttention. It lives side by side with the pip-installed `transformers` (still used for tokenizers and by TextAttack). Run the scripts from the repo root so that `protransformers` is importable.
+> `protransformers` is a modified copy of 🤗 Transformers (v4.40) that contains ProAttention. It is imported as `protransformers` and lives side by side with the pip-installed `transformers` (still used for tokenizers and by TextAttack).
 
 ### 1️⃣ Plug ProAttention into any model in 3 lines
 
@@ -299,7 +309,7 @@ python llm_jailbreak.py --model lmsys/vicuna-7b-v1.5 --norm Huber --delta 0.1 \
 ## 📊 Experimental Results
 
 <p align="center">
-  <img src="./figures/results.png" width="100%" />
+  <img src="https://raw.githubusercontent.com/chris-hzc/ProTransformer/main/figures/results.png" width="100%" />
 </p>
 
 Pro-BERT (MCP) is competitive with adversarial-training defenses (FreeLB, PGD, MixADA, TA-VAT) **without any training**, and combining it with adversarial training (**Pro-BERT (MCP) + AT**) sets the best results across all four attacks. See the [paper](https://arxiv.org/abs/2410.23182) for results on LLMs (T5, LLaMA, Vicuna), jailbreaks, ViT, and GAT.
@@ -315,6 +325,7 @@ ProTransformer/
 ├── graph_attack.py         # 4️⃣ Adaptive PGD topology attack on Pro-GAT
 ├── llm_chat.py             # 5️⃣ Chat with Pro-Vicuna / Pro-LLaMA / Pro-T5
 ├── llm_jailbreak.py        # 6️⃣ Jailbreak ASR of Pro-Vicuna / Pro-LLaMA
+├── pyproject.toml          # pip install -e ".[examples]"
 ├── requirements.txt
 ├── protransformers/        # Modified 🤗 Transformers (v4.40) with ProAttention
 │   ├── pro_attention.py    #   ← ProAttention + set_pro_attention
@@ -342,6 +353,10 @@ If you find ProTransformer useful in your research, please consider citing our p
 ## 🙏 Acknowledgements
 
 This codebase builds upon [🤗 Transformers](https://github.com/huggingface/transformers) and [TextAttack](https://github.com/QData/TextAttack). We thank the authors for their great work.
+
+## 📄 License
+
+This project is released under the [Apache 2.0 License](https://github.com/chris-hzc/ProTransformer/blob/main/LICENSE). `protransformers/` is a modified copy of [🤗 Transformers](https://github.com/huggingface/transformers), which is also licensed under Apache 2.0.
 
 ## 📬 Contact
 

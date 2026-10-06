@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "protransformers"
+version = "0.1.0"
+description = "ProTransformer: Robustify Transformers via Plug-and-Play Paradigm (NeurIPS 2024)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Zhichao Hou", email = "zhou4@ncsu.edu" },
+    { name = "Weizhi Gao" },
+    { name = "Yuchen Shen" },
+    { name = "Feiyi Wang" },
+    { name = "Xiaorui Liu" },
+]
+keywords = ["adversarial robustness", "transformers", "attention", "robust statistics", "plug-and-play"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Runtime requirements of the bundled 🤗 Transformers v4.40 fork (see protransformers/dependency_versions_check.py)
+dependencies = [
+    "torch",
+    "numpy>=1.17",
+    "tokenizers>=0.14",
+    "huggingface-hub>=0.19.3,<1.0",
+    "safetensors>=0.4.1",
+    "accelerate>=0.21.0",
+    "filelock",
+    "packaging>=20.0",
+    "pyyaml>=5.1",
+    "regex!=2019.12.17",
+    "requests",
+    "tqdm>=4.27",
+]
+
+[project.optional-dependencies]
+# Everything needed by the quick-start scripts in the repository root
+examples = [
+    "transformers",
+    "textattack",
+    "torchvision",
+    "sentencepiece",
+    "protobuf",
+    "scipy",
+    "scikit-learn",
+]
+
+[project.urls]
+Homepage = "https://github.com/chris-hzc/ProTransformer"
+Paper = "https://arxiv.org/abs/2410.23182"
+
+[tool.setuptools.packages.find]
+include = ["protransformers*"]
+
+[tool.setuptools.package-data]
+protransformers = ["**/*.cu", "**/*.cuh", "**/*.h", "**/*.cpp", "**/*.pyx"]

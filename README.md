@@ -64,11 +64,14 @@ Without any further fine-tuning, ProTransformer improves the robustness of vanil
 
 #### 1. Attention is a weighted least-squares (WLS) estimator
 
-Each output token aggregates value vectors with attention weights, $z=\sum_j a_j v_j$, which is exactly the minimizer of
+Each output token aggregates the value vectors with attention weights, which is exactly the solution of a weighted least-squares problem:
 
-```math
-\arg\min_{z} \mathcal{L}(z) = \sum_{j=1}^{N} a_j \| v_j - z \|^2
-```
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./figures/eq_wls_dark.svg">
+    <img src="./figures/eq_wls_light.svg" alt="z = argmin_z sum_j a_j ||v_j - z||^2 = sum_j a_j v_j">
+  </picture>
+</p>
 
 The quadratic penalty lets a few **adversarially perturbed tokens dominate** the output — the root of the vulnerability.
 
@@ -76,21 +79,23 @@ The quadratic penalty lets a few **adversarially perturbed tokens dominate** the
 
 We replace the quadratic loss with a robust penalty $\rho$ (ℓ₁, Huber, MCP, Huber-MCP):
 
-```math
-\arg\min_{z} \mathcal{L}(z) = \sum_{j=1}^{N} a_j \rho( \| v_j - z \| )
-```
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./figures/eq_robust_dark.svg">
+    <img src="./figures/eq_robust_light.svg" alt="z = argmin_z sum_j a_j rho(||v_j - z||)">
+  </picture>
+</p>
 
 #### 3. Newton-IRLS → ProAttention
 
 Optimizing a convex localized upper bound with a Newton step yields a closed-form **re-weighted attention**:
 
-```math
-z^{(k+1)} = \frac{\sum_j a_j w_j^{(k)} v_j}{\sum_j a_j w_j^{(k)}}
-```
-
-```math
-w_j^{(k)} = \frac{\rho'( \| v_j - z^{(k)} \| )}{2 \| v_j - z^{(k)} \|}
-```
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./figures/eq_irls_dark.svg">
+    <img src="./figures/eq_irls_light.svg" alt="z^(k+1) = sum_j a_j w_j v_j / sum_j a_j w_j,  w_j = rho'(||v_j - z||) / (2 ||v_j - z||)">
+  </picture>
+</p>
 
 with guaranteed descent $\mathcal{L}(z^{(k+1)}) \le \mathcal{L}(z^{(k)})$. Outlier tokens with large residuals are automatically **down-weighted** (and fully removed beyond $\gamma$ for MCP).
 
